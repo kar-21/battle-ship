@@ -7,7 +7,7 @@ const App = () => {
 
   const getUserName = (name) => {
     setUserName(name);
-    console.debug('User Name App Component >>', name);
+    console.debug('User Name App Component >>', userName);
   };
 
   return (
