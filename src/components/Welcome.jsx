@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const classes = {
   div: {
@@ -19,9 +20,12 @@ const classes = {
 function WelcomePage(props) {
   let [name, setName] = useState("Anonymous");
   let [isFormValid, setIsFormValid] = useState(true);
+  let history = useHistory();
 
   const callStart = () => {
-    console.log("User Name >>> ", name);
+    console.debug("User Name >>> ", name);
+    props.getUserName(name);
+    history.push("/"); //redirect to next page
   };
 
   const handleChange = (event) => {
