@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import WelcomePage from "./components/Welcome";
 
 const App = () => {
   return (
@@ -9,7 +10,7 @@ const App = () => {
           <Route
             exact
             path="/"
-            component={() => <>Battle Ship</>}
+            component={() => <WelcomePage />}
           />
         </Switch>
       </BrowserRouter>
