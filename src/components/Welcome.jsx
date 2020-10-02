@@ -15,6 +15,9 @@ const classes = {
     margin: "0px 0px -14px",
     fontSize: "10px",
   },
+  p: {
+    fontWeight: "600",
+  },
 };
 
 function WelcomePage(props) {
@@ -44,11 +47,15 @@ function WelcomePage(props) {
     <>
       <div style={classes.div}>
         <h1>Battle Ship</h1>
-        <h5>
+        <p style={classes.p}>
           Welcome to the Battle Ground.
           <br />
-          Can I call you <input onChange={handleChange} value={name}></input> ?
-        </h5>
+          <label>
+            Can I call you{" "}
+            <input type="text" onChange={handleChange} value={name}></input>
+          </label>
+          ?
+        </p>
         {isFormValid ? (
           <></>
         ) : (
