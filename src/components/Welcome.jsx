@@ -28,7 +28,7 @@ function WelcomePage(props) {
   const callStart = () => {
     console.debug("User Name >>> ", name);
     props.getUserName(name);
-    history.push("/"); //redirect to next page
+    history.push("/arrangeShip"); //redirect to next page
   };
 
   const handleChange = (event) => {
