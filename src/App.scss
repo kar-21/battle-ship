@@ -1,0 +1,41 @@
+h1 {
+  margin: 0;
+  padding-top: 1vh;
+}
+
+h3 {
+  margin: 0;
+  padding-top: 3vh;
+}
+
+h5 {
+  margin: 0;
+  padding-top: 0.75vh;
+}
+h6 {
+  margin: 0;
+  padding-top: 0.5vh;
+  font-weight: 400;
+}
+
+.canvas-ship {
+  display: flex;
+  margin: auto;
+}
+.instructionsContainer {
+  position: absolute;
+  top: 7%;
+  left: calc(50% + 123px);
+  width: 36%;
+  background-image: url("./assets/icons/arrow-down.svg");
+  background-repeat: no-repeat;
+  background-size: 178px;
+  @media screen AND (max-width: 1024px) {
+    top: 10%;
+  }
+  @media screen AND (max-width: 800px) {
+    top: 12%;
+    left: calc(50% + 97px);
+    background-size: 102px;
+  }
+}
