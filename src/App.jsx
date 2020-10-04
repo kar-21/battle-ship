@@ -36,21 +36,27 @@ const App = () => {
   const handle = useFullScreenHandle();
 
   useEffect(() => {
+    const handleResize = () => {
+      const landscape = window.screen.width > window.screen.height;
+      if (landscape !== isLandScape) {
+        setIsLandScape(landscape);
+      }
+    };
     window.addEventListener("resize", handleResize);
   });
 
   useEffect(() => {
+    const handleResize = () => {
+      const landscape = window.screen.width > window.screen.height;
+      if (landscape !== isLandScape) {
+        setIsLandScape(landscape);
+      }
+    };
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isLandScape]);
 
-  const handleResize = () => {
-    const landscape = window.screen.width > window.screen.height;
-    if (landscape !== isLandScape) {
-      setIsLandScape(landscape);
-    }
-  };
   const getUserName = (name) => {
     setUserName(name);
     console.debug("User Name App Component >>", userName);
