@@ -602,7 +602,9 @@ class ArrangeShipCanvas extends React.Component {
 
   componentWillUnmount() {
     this.canvasRefs = null;
-    this.p5Ref = null;
+    this.p5Ref.noCanvas();
+    this.p5Ref.remove();
+    this.p5Ref.removeElements();
   }
 
   render() {
