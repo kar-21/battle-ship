@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { Suspense } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import DeviceOrientation, { Orientation } from "react-screen-orientation";
 import "./App.scss";
 
 const Welcome = React.lazy(() => import("./components/Welcome"));
@@ -30,32 +31,8 @@ const App = () => {
   const [userName, setUserName] = useState("");
   const [gridArray, setGridArray] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isLandScape, setIsLandScape] = useState(
-    window.screen.width > window.screen.height
-  );
+
   const handle = useFullScreenHandle();
-
-  useEffect(() => {
-    const handleResize = () => {
-      const landscape = window.screen.width > window.screen.height;
-      if (landscape !== isLandScape) {
-        setIsLandScape(landscape);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      const landscape = window.screen.width > window.screen.height;
-      if (landscape !== isLandScape) {
-        setIsLandScape(landscape);
-      }
-    };
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [isLandScape]);
 
   const getUserName = (name) => {
     setUserName(name);
@@ -67,64 +44,67 @@ const App = () => {
   };
 
   const reportChange = useCallback((state, handle) => {
+    console.log(">>>", state);
     setIsFullscreen(state);
   }, []);
 
+  const RoutingComponents = () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BrowserRouter>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            component={() => <Welcome getUserName={getUserName} />}
+          />
+          <Route
+            exact
+            path="/arrangeShip"
+            component={() => (
+              <ArrangeShips userName={userName} getGridArray={getGridArray} />
+            )}
+          />
+          <Route
+            exact
+            path="/battleGround"
+            component={() => <div>{gridArray}</div>}
+          />
+          <Route path="/**" component={() => <Error />} />
+        </Switch>
+      </BrowserRouter>
+    </Suspense>
+  );
+
+  const EnterFullScreenText = () => (
+    <div style={classes.fullscreenDiv}>
+      <span style={classes.fullscreenText}>
+        For better experince we want you to use this application in fullscreen
+        mode.
+      </span>
+      <button style={classes.fullscreenButton} onClick={handle.enter}>
+        Enter FullScreen
+      </button>
+    </div>
+  );
   return (
     <>
-      <div style={classes.fullscreenDiv}>
-        <span style={classes.fullscreenText}>
-          For better experince we want you to use this application in fullscreen
-          mode{" "}
-          {isLandScape ? (
-            <></>
-          ) : (
-            <span>
-              and we support landscape mode. Please Rotate your screen
-            </span>
-          )}
-          .
-        </span>
-        <button
-          style={classes.fullscreenButton}
-          onClick={handle.enter}
-          disabled={!isLandScape}
-        >
-          Enter FullScreen
-        </button>
-      </div>
+      <EnterFullScreenText />
       <FullScreen handle={handle} onChange={reportChange}>
-        {isFullscreen ? (
-          <Suspense fallback={<div>Loading...</div>}>
-            <BrowserRouter>
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  component={() => <Welcome getUserName={getUserName} />}
-                />
-                <Route
-                  exact
-                  path="/arrangeShip"
-                  component={() => (
-                    <ArrangeShips
-                      userName={userName}
-                      getGridArray={getGridArray}
-                    />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/battleGround"
-                  component={() => <div>{gridArray}</div>}
-                />
-                <Route path="/**" component={() => <Error />} />
-              </Switch>
-            </BrowserRouter>
-          </Suspense>
-        ) : (
-          <></>
-        )}
+        <DeviceOrientation
+          lockOrientation={"landscape"}
+          className="orientation"
+        >
+          <Orientation orientation="landscape" alwaysRender={false}>
+            {isFullscreen ? <RoutingComponents /> : <></>}
+          </Orientation>
+          <Orientation orientation="portrait" alwaysRender={false}>
+            <div style={classes.fullscreenDiv}>
+              <span style={classes.fullscreenText}>
+                Please rotate your device
+              </span>
+            </div>
+          </Orientation>
+        </DeviceOrientation>
       </FullScreen>
     </>
   );
