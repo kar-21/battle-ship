@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const ArrangeShipCanvas = React.lazy(() =>
   import("./canvas/ArrangeShipCanvas")
@@ -18,13 +19,23 @@ const classes = {
     flexDirection: "row",
     justifyContent: "space-around",
   },
+  progress: {
+    display: "flex",
+    justifyContent: "center",
+  },
 };
 
 function ArrangeShips(props) {
   return (
     <>
       <h1 style={classes.h1}>Arrange Your Ships {props.userName} </h1>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div style={classes.progress}>
+            <CircularProgress />
+          </div>
+        }
+      >
         <ArrangeShipCanvas getGridArray={props.getGridArray} />
       </Suspense>
     </>

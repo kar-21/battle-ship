@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 
 const classes = {
   div: {
@@ -9,13 +14,23 @@ const classes = {
     textAlign: "center",
     paddingTop: "5vh",
   },
+  p: {
+    fontWeight: "600",
+  },
   error: {
-    color: "red",
     margin: "0px 0px -14px",
     fontSize: "10px",
   },
-  p: {
-    fontWeight: "600",
+  label: {
+    display: "inline-flex",
+    alignItems: "baseline",
+  },
+  span: {
+    marginRight: "5px",
+  },
+  button: {
+    margin: "3%",
+    fontWeight: "bolder",
   },
 };
 
@@ -49,22 +64,43 @@ function WelcomePage(props) {
         <p style={classes.p}>
           Welcome to the Battle Ground.
           <br />
-          <label>
-            Can I call you{" "}
-            <input type="text" onChange={handleChange} value={name}></input>
+          <label style={classes.label}>
+            <span style={classes.span}>Can I call you</span>
+            <FormControl>
+              <Input
+                autoFocus
+                type="text"
+                color="primary"
+                style={classes.textField}
+                size="small"
+                error={!isFormValid}
+                value={name}
+                onChange={handleChange}
+              />
+              {!isFormValid ? (
+                <FormHelperText style={classes.error} error={!isFormValid}>
+                  We accept only alphanumeric values.
+                </FormHelperText>
+              ) : (
+                <></>
+              )}
+            </FormControl>
           </label>
           ?
         </p>
-        {isFormValid ? (
-          <></>
-        ) : (
-          <p style={classes.error}>We accept only alphanumeric values.</p>
-        )}
       </div>
       <div style={classes.login}>
-        <button disabled={!isFormValid} onClick={callStart}>
+        <Button
+          style={classes.button}
+          color="primary"
+          variant="contained"
+          size="large"
+          disabled={!isFormValid}
+          onClick={callStart}
+          startIcon={<PlayCircleFilledIcon />}
+        >
           Start
-        </button>
+        </Button>
       </div>
     </>
   );
