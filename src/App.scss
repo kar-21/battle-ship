@@ -52,3 +52,12 @@ h6 {
   height: 100vh;
   display: contents;
 }
+
+.canvas-button {
+  display: flex;
+  position: absolute;
+  font-size: x-large;
+  width: 35px;
+  height: 35px;
+  top: calc(100% - 35px);
+}
