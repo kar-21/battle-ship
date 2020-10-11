@@ -41,13 +41,14 @@ h6 {
 }
 
 .fullscreen {
-  background-color: white;
+  background-color: #f8f8f8;
   justify-content: center;
   display: flex;
   flex-direction: column;
 }
 
-.orientation, .react-orientation--landscape {
+.orientation,
+.react-orientation--landscape {
   width: 100vw;
   height: 100vh;
   display: contents;
@@ -60,4 +61,21 @@ h6 {
   width: 35px;
   height: 35px;
   top: calc(100% - 35px);
+  color: #5a5a5a;
+  border: 1px solid rgba(90, 90, 90, 0.5);
+  box-sizing: border-box;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.MuiInputBase-input {
+  font-weight: bolder !important;
+}
+
+.MuiButton-root {
+  text-transform: unset;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import p5 from "p5";
 import { withRouter } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 import { SHIP_PROPERTIES } from "../../constants";
 
 import miniDefenderOneSVG from "../../assets/images/mini-defender-1.svg";
@@ -24,7 +25,7 @@ const classes = {
   },
   instructions: {
     marginLeft: "37%",
-    backgroundColor: "rgb(255,255,255, 0.75)",
+    backgroundColor: "rgba(248, 248, 248, 0.75)",
   },
   h4: {
     margin: "0px",
@@ -147,7 +148,7 @@ class ArrangeShipCanvas extends React.Component {
       );
       canvas.class("canvas-ship");
       if (this.state.isTouchScrren) {
-        button = p.createButton('&#8635;');
+        button = p.createButton("&#8635;");
         button.class("canvas-button");
         button.mousePressed(rotateClicked);
       }
@@ -285,8 +286,10 @@ class ArrangeShipCanvas extends React.Component {
           this.shipProperties[ship].alignment = "horizontal";
           this.mouseImageOffsetX = this.gridSize / 2;
           this.mouseImageOffsetY = this.gridSize / 2;
-          this.shipProperties[ship].positionX = p.mouseX - this.mouseImageOffsetX;
-          this.shipProperties[ship].positionY = p.mouseY -this.mouseImageOffsetY;
+          this.shipProperties[ship].positionX =
+            p.mouseX - this.mouseImageOffsetX;
+          this.shipProperties[ship].positionY =
+            p.mouseY - this.mouseImageOffsetY;
         }
         if (
           this.shipProperties[ship] === this.currentlySelectedShip &&
@@ -295,8 +298,10 @@ class ArrangeShipCanvas extends React.Component {
           this.shipProperties[ship].alignment = "vertical";
           this.mouseImageOffsetX = this.gridSize / 2;
           this.mouseImageOffsetY = this.gridSize / 2;
-          this.shipProperties[ship].positionX = p.mouseX-this.mouseImageOffsetX;
-          this.shipProperties[ship].positionY = p.mouseY-this.mouseImageOffsetY;
+          this.shipProperties[ship].positionX =
+            p.mouseX - this.mouseImageOffsetX;
+          this.shipProperties[ship].positionY =
+            p.mouseY - this.mouseImageOffsetY;
         }
       });
     };
@@ -659,9 +664,15 @@ class ArrangeShipCanvas extends React.Component {
       <>
         <div style={classes.canvas} ref={this.canvasRefs}></div>
         {this.state.isArrageShipCompleted ? (
-          <button style={classes.button} onClick={this.sendGridArray}>
+          <Button
+            style={classes.button}
+            color="primary"
+            variant="outlined"
+            size="large"
+            onClick={this.sendGridArray}
+          >
             Lets Battle !
-          </button>
+          </Button>
         ) : (
           <></>
         )}
