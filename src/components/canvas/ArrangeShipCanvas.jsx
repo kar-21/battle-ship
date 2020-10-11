@@ -291,8 +291,7 @@ class ArrangeShipCanvas extends React.Component {
             p.mouseX - this.mouseImageOffsetX;
           this.shipProperties[ship].positionY =
             p.mouseY - this.mouseImageOffsetY;
-        }
-        if (
+        } else if (
           this.shipProperties[ship] === this.currentlySelectedShip &&
           this.shipProperties[ship].alignment === "horizontal"
         ) {
