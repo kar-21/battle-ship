@@ -150,7 +150,6 @@ class ArrangeShipCanvas extends React.Component {
       if (this.state.isTouchScrren) {
         button = p.createButton("&#8635;");
         button.class("canvas-button");
-        button.mousePressed(rotateClicked);
         button.touchStarted(rotateClicked);
       }
     };
