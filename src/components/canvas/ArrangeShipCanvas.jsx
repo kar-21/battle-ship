@@ -45,6 +45,8 @@ class ArrangeShipCanvas extends React.Component {
       isDragged: false,
       isKeyPressed: false,
       isTouchScrren: this.isTouchScreen(),
+      alignment: true,
+      executeState: 0,
     };
   }
   rowColumn = 10;
@@ -167,6 +169,10 @@ class ArrangeShipCanvas extends React.Component {
         if (isInsideShip(this.shipProperties[ship])) {
           this.shipProperties[ship].selected = true;
           this.currentlySelectedShip = this.shipProperties[ship];
+          this.setState({
+            ...this.state,
+            alignment: this.shipProperties[ship].alignment,
+          });
           clearSelected(ship);
           calculateOffsetMouseDrag(this.shipProperties[ship]);
         }
@@ -254,6 +260,7 @@ class ArrangeShipCanvas extends React.Component {
               p.mouseX - this.mouseImageOffsetX;
             this.shipProperties[ship].positionY =
               p.mouseY - this.mouseImageOffsetY;
+            this.setState({ ...this.state, executeState: 1 });
           }
         });
       } else if (this.currentlySelectedShip && p.keyCode === 86) {
@@ -269,6 +276,7 @@ class ArrangeShipCanvas extends React.Component {
               p.mouseX - this.mouseImageOffsetX;
             this.shipProperties[ship].positionY =
               p.mouseY - this.mouseImageOffsetY;
+            this.setState({ ...this.state, executeState: 1 });
           }
         });
       }
@@ -661,6 +669,10 @@ class ArrangeShipCanvas extends React.Component {
   render() {
     return (
       <>
+        <span>
+          {this.state.alignment}
+          {this.state.executeState}
+        </span>
         <div style={classes.canvas} ref={this.canvasRefs}></div>
         {this.state.isArrageShipCompleted ? (
           <Button
