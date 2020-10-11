@@ -1,7 +1,6 @@
 import React from "react";
 import p5 from "p5";
 import { withRouter } from "react-router-dom";
-import LoopIcon from "@material-ui/icons/Loop";
 import { SHIP_PROPERTIES } from "../../constants";
 
 import miniDefenderOneSVG from "../../assets/images/mini-defender-1.svg";
