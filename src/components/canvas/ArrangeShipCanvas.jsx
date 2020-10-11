@@ -43,6 +43,7 @@ class ArrangeShipCanvas extends React.Component {
       isArrageShipCompleted: false,
       isDragged: false,
       isKeyPressed: false,
+      isTouchScrren: this.isTouchScreen(),
     };
   }
   rowColumn = 10;
@@ -127,6 +128,7 @@ class ArrangeShipCanvas extends React.Component {
 
   Sketch = (p) => {
     let canvas;
+    let button;
 
     p.preload = () => {
       this.calculateInitialPositions();
@@ -144,6 +146,11 @@ class ArrangeShipCanvas extends React.Component {
         p.SVG
       );
       canvas.class("canvas-ship");
+      if (this.state.isTouchScrren) {
+        button = p.createButton('&#8635;');
+        button.class("canvas-button");
+        button.mousePressed(rotateClicked);
+      }
     };
 
     p.draw = () => {
@@ -185,10 +192,12 @@ class ArrangeShipCanvas extends React.Component {
             grabXRatio >= 0 &&
             grabYRatio >= 0
           ) {
+            const yPosition = this.state.isTouchScrren
+              ? this.gridSize * grabYRatio + offsetY + 2
+              : this.gridSize * grabYRatio + offsetY + 4;
             this.shipProperties[ship].positionX =
               this.gridSize * grabXRatio + offsetX;
-            this.shipProperties[ship].positionY =
-              this.gridSize * grabYRatio + offsetY + 4;
+            this.shipProperties[ship].positionY = yPosition;
             assignLocation(ship, index, grabXRatio, grabYRatio);
             this.isArrageShipComplete();
           } else if (
@@ -198,8 +207,10 @@ class ArrangeShipCanvas extends React.Component {
             grabXRatio >= 0 &&
             grabYRatio >= 0
           ) {
-            this.shipProperties[ship].positionX =
-              this.gridSize * grabXRatio + offsetX - 4;
+            const xPosition = this.state.isTouchScrren
+              ? this.gridSize * grabXRatio + offsetY - 2
+              : this.gridSize * grabXRatio + offsetY - 4;
+            this.shipProperties[ship].positionX = xPosition;
             this.shipProperties[ship].positionY =
               this.gridSize * grabYRatio + offsetY;
             assignLocation(ship, index, grabXRatio, grabYRatio);
@@ -260,6 +271,34 @@ class ArrangeShipCanvas extends React.Component {
           }
         });
       }
+    };
+
+    const rotateClicked = () => {
+      if (!this.state.isKeyPressed) {
+        this.setState({ ...this.state, isKeyPressed: true });
+      }
+      Object.keys(this.shipProperties).forEach((ship) => {
+        if (
+          this.shipProperties[ship] === this.currentlySelectedShip &&
+          this.shipProperties[ship].alignment === "vertical"
+        ) {
+          this.shipProperties[ship].alignment = "horizontal";
+          this.mouseImageOffsetX = this.gridSize / 2;
+          this.mouseImageOffsetY = this.gridSize / 2;
+          this.shipProperties[ship].positionX = p.mouseX - this.mouseImageOffsetX;
+          this.shipProperties[ship].positionY = p.mouseY -this.mouseImageOffsetY;
+        }
+        if (
+          this.shipProperties[ship] === this.currentlySelectedShip &&
+          this.shipProperties[ship].alignment === "horizontal"
+        ) {
+          this.shipProperties[ship].alignment = "vertical";
+          this.mouseImageOffsetX = this.gridSize / 2;
+          this.mouseImageOffsetY = this.gridSize / 2;
+          this.shipProperties[ship].positionX = p.mouseX-this.mouseImageOffsetX;
+          this.shipProperties[ship].positionY = p.mouseY-this.mouseImageOffsetY;
+        }
+      });
     };
 
     const calculateOffsetMouseDrag = (ship) => {
@@ -607,6 +646,14 @@ class ArrangeShipCanvas extends React.Component {
     this.p5Ref.removeElements();
   }
 
+  isTouchScreen = () => {
+    return (
+      "ontouchstart" in window ||
+      navigator.MaxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
+  };
+
   render() {
     return (
       <>
@@ -633,10 +680,19 @@ class ArrangeShipCanvas extends React.Component {
                   <></>
                 )}
                 {!this.state.isKeyPressed ? (
-                  <li style={classes.li}>
-                    Use key V or H to align ship vertically or horizontally
-                    while Dragging ship.
-                  </li>
+                  <>
+                    {this.state.isTouchScrren ? (
+                      <li style={classes.li}>
+                        Use Rotate key at the left bottom corner to align ship
+                        vertically or horizontally while Dragging ship.
+                      </li>
+                    ) : (
+                      <li style={classes.li}>
+                        Use key V or H to align ship vertically or horizontally
+                        while Dragging ship.
+                      </li>
+                    )}
+                  </>
                 ) : (
                   <></>
                 )}
