@@ -2,6 +2,7 @@ import React from "react";
 import p5 from "p5";
 import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import { SHIP_PROPERTIES } from "../../constants";
 
 import miniDefenderOneSVG from "../../assets/images/mini-defender-1.svg";
@@ -45,8 +46,6 @@ class ArrangeShipCanvas extends React.Component {
       isDragged: false,
       isKeyPressed: false,
       isTouchScrren: this.isTouchScreen(),
-      alignment: true,
-      executeState: 0,
     };
   }
   rowColumn = 10;
@@ -169,10 +168,6 @@ class ArrangeShipCanvas extends React.Component {
         if (isInsideShip(this.shipProperties[ship])) {
           this.shipProperties[ship].selected = true;
           this.currentlySelectedShip = this.shipProperties[ship];
-          this.setState({
-            ...this.state,
-            alignment: this.shipProperties[ship].alignment,
-          });
           clearSelected(ship);
           calculateOffsetMouseDrag(this.shipProperties[ship]);
         }
@@ -260,7 +255,6 @@ class ArrangeShipCanvas extends React.Component {
               p.mouseX - this.mouseImageOffsetX;
             this.shipProperties[ship].positionY =
               p.mouseY - this.mouseImageOffsetY;
-            this.setState({ ...this.state, executeState: 1 });
           }
         });
       } else if (this.currentlySelectedShip && p.keyCode === 86) {
@@ -276,7 +270,6 @@ class ArrangeShipCanvas extends React.Component {
               p.mouseX - this.mouseImageOffsetX;
             this.shipProperties[ship].positionY =
               p.mouseY - this.mouseImageOffsetY;
-            this.setState({ ...this.state, executeState: 1 });
           }
         });
       }
@@ -669,18 +662,15 @@ class ArrangeShipCanvas extends React.Component {
   render() {
     return (
       <>
-        <span>
-          {this.state.alignment}
-          {this.state.executeState}
-        </span>
         <div style={classes.canvas} ref={this.canvasRefs}></div>
         {this.state.isArrageShipCompleted ? (
           <Button
             style={classes.button}
             color="primary"
-            variant="outlined"
+            variant="contained"
             size="large"
             onClick={this.sendGridArray}
+            startIcon={<PlayCircleFilledIcon />}
           >
             Lets Battle !
           </Button>
