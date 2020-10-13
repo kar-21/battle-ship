@@ -2,6 +2,7 @@ import React from "react";
 import p5 from "p5";
 import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import { SHIP_PROPERTIES } from "../../constants";
 
 import miniDefenderOneSVG from "../../assets/images/mini-defender-1.svg";
@@ -150,7 +151,7 @@ class ArrangeShipCanvas extends React.Component {
       if (this.state.isTouchScrren) {
         button = p.createButton("&#8635;");
         button.class("canvas-button");
-        button.mousePressed(rotateClicked);
+        button.touchStarted(rotateClicked);
       }
     };
 
@@ -290,8 +291,7 @@ class ArrangeShipCanvas extends React.Component {
             p.mouseX - this.mouseImageOffsetX;
           this.shipProperties[ship].positionY =
             p.mouseY - this.mouseImageOffsetY;
-        }
-        if (
+        } else if (
           this.shipProperties[ship] === this.currentlySelectedShip &&
           this.shipProperties[ship].alignment === "horizontal"
         ) {
@@ -667,9 +667,10 @@ class ArrangeShipCanvas extends React.Component {
           <Button
             style={classes.button}
             color="primary"
-            variant="outlined"
+            variant="contained"
             size="large"
             onClick={this.sendGridArray}
+            startIcon={<PlayCircleFilledIcon />}
           >
             Lets Battle !
           </Button>
