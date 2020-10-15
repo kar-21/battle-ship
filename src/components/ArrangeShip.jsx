@@ -28,7 +28,6 @@ const classes = {
 function ArrangeShips(props) {
   return (
     <>
-      <h1 style={classes.h1}>Arrange Your Ships {props.userName} </h1>
       <Suspense
         fallback={
           <div style={classes.progress}>
@@ -36,6 +35,7 @@ function ArrangeShips(props) {
           </div>
         }
       >
+        <h1 style={classes.h1}>Arrange Your Ships {props.userName} </h1>
         <ArrangeShipCanvas getGridArray={props.getGridArray} />
       </Suspense>
     </>
