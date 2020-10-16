@@ -7,6 +7,8 @@ export function SHIP_PROPERTIES() {
       hovered: false,
       selected: false,
       cellLocation: [],
+      bomedLocation: [],
+      displayShip: false,
     },
     miniDefenderTwo: {
       cellSize: 2,
@@ -15,6 +17,8 @@ export function SHIP_PROPERTIES() {
       hovered: false,
       selected: false,
       cellLocation: [],
+      bomedLocation: [],
+      displayShip: false,
     },
     defenderOne: {
       cellSize: 3,
@@ -23,6 +27,8 @@ export function SHIP_PROPERTIES() {
       hovered: false,
       selected: false,
       cellLocation: [],
+      bomedLocation: [],
+      displayShip: false,
     },
     defenderTwo: {
       cellSize: 3,
@@ -31,6 +37,8 @@ export function SHIP_PROPERTIES() {
       hovered: false,
       selected: false,
       cellLocation: [],
+      bomedLocation: [],
+      displayShip: false,
     },
     destroyer: {
       cellSize: 4,
@@ -39,6 +47,8 @@ export function SHIP_PROPERTIES() {
       hovered: false,
       selected: false,
       cellLocation: [],
+      bomedLocation: [],
+      displayShip: false,
     },
     submarine: {
       cellSize: 4,
@@ -47,6 +57,8 @@ export function SHIP_PROPERTIES() {
       hovered: false,
       selected: false,
       cellLocation: [],
+      bomedLocation: [],
+      displayShip: false,
     },
     aircraftCarrier: {
       cellSize: 5,
@@ -55,6 +67,8 @@ export function SHIP_PROPERTIES() {
       hovered: false,
       selected: false,
       cellLocation: [],
+      bomedLocation: [],
+      displayShip: false,
     },
   };
   return shipArray;

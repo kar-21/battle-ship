@@ -15,6 +15,7 @@ import "./App.scss";
 const Welcome = React.lazy(() => import("./components/Welcome"));
 const ArrangeShips = React.lazy(() => import("./components/ArrangeShip"));
 const Error = React.lazy(() => import("./components/Error"));
+const BattleGround = React.lazy(() => import("./components/BattleGround"));
 
 const theme = createMuiTheme({
   palette: {
@@ -103,7 +104,7 @@ const App = () => {
           <Route
             exact
             path="/battleGround"
-            component={() => <div>{gridArray}</div>}
+            component={() => (<BattleGround userName={userName}  gridArray={gridArray} />)}
           />
           <Route path="/**" component={() => <Error />} />
         </Switch>
