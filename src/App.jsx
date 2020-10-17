@@ -138,7 +138,6 @@ const App = () => {
           <EnterFullScreenText />
           <FullScreen handle={handle} onChange={reportChange}>
             <DeviceOrientation
-              lockOrientation={"landscape"}
               className="orientation"
             >
               <Orientation orientation="landscape" alwaysRender={false}>
