@@ -68,7 +68,6 @@ function WelcomePage(props) {
             <span style={classes.span}>Can I call you</span>
             <FormControl>
               <Input
-                autoFocus
                 type="text"
                 color="primary"
                 style={classes.textField}
