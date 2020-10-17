@@ -56,16 +56,15 @@ const classes = {
     background: "white",
     boxShadow: "10px 9px 15px 7px #888888",
     borderRadius: "6px",
+    textAlign: "center",
   },
   buttonRoute: {
     margin: "1%",
-    marginLeft: "calc(50% - 9vh)",
-    width: "18vh",
   },
   arrangeButton: {
     margin: "1%",
-    marginLeft: "calc(50% - 12vh)",
-    width: "24vh",
+    marginLeft: "calc(50% - 12vw)",
+    width: "24vw",
   },
 };
 
@@ -1270,7 +1269,7 @@ class BattleGroundCanvas extends React.Component {
           </>
         ) : (
           <>
-            <h1 style={classes.h3}>No data found</h1>
+            <h3 style={classes.h3}>No data found !</h3>
             <Button
               style={classes.arrangeButton}
               color="primary"
