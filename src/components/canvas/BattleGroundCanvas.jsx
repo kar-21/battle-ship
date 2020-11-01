@@ -16,6 +16,8 @@ import defenderTwoSVG from "../../assets/images/defenderTwo.svg";
 import destroyerSVG from "../../assets/images/destroyer.svg";
 import submarineSVG from "../../assets/images/submarine.svg";
 import aircraftCarrierSVG from "../../assets/images/aircraft-carrier.svg";
+import MissileMiss from "../../assets/sounds/missile_drop.mp3";
+import MissileHit from "../../assets/sounds/missile_hit.mp3";
 
 const classes = {
   canvas: {
@@ -110,6 +112,8 @@ class BattleGroundCanvas extends React.Component {
 
   gridArrayUser = this.props.gridArray;
   gridArrayComputer;
+  missileHitSound;
+  missileMissSound;
 
   miniDefenderOne;
   miniDefenderTwo;
@@ -123,7 +127,7 @@ class BattleGroundCanvas extends React.Component {
   cellAvailableToBombForComputer = [];
   lastBombedCells = [];
   lastMissedCell = null;
-  timeout = 500;
+  timeout = 2000;
   isShipConcentated;
 
   userShipProperties = new SHIP_PROPERTIES();
@@ -403,6 +407,7 @@ class BattleGroundCanvas extends React.Component {
       console.log("1>>>>", this.cellAvailableToBombForComputer);
       if (this.gridArrayUser[randomColumn][randomRow] === null) {
         this.gridArrayUser[randomColumn][randomRow] = "miss";
+        this.missileMissSound.play();
         this.isComputerTurn = false;
         this.setState({ ...this.state, isComputerTurn: false });
       } else {
@@ -415,6 +420,7 @@ class BattleGroundCanvas extends React.Component {
           this.state.anyoneWon === null
             ? "bombed"
             : this.gridArrayUser[randomColumn][randomRow];
+        this.missileHitSound.play();
         this.lastBombedCells.push(randomCell);
         let isAllCellBombed = true;
         this.checkAllUserShipsBombed();
@@ -509,6 +515,7 @@ class BattleGroundCanvas extends React.Component {
       const nextBombColumn = Math.floor(randomNextCell / this.rowColumn);
       if (this.gridArrayUser[nextBombColumn][nextBombRow] === null) {
         this.gridArrayUser[nextBombColumn][nextBombRow] = "miss";
+        this.missileMissSound.play();
         this.isComputerTurn = false;
         this.setState({ ...this.state, isComputerTurn: false });
       } else {
@@ -520,6 +527,7 @@ class BattleGroundCanvas extends React.Component {
           this.state.anyoneWon === null
             ? "bombed"
             : this.gridArrayUser[nextBombColumn][nextBombRow];
+        this.missileHitSound.play();
         this.lastBombedCells.push(randomNextCell);
         console.log(">>>", this.lastBombedCells);
         let isAllCellBombed = true;
@@ -629,6 +637,7 @@ class BattleGroundCanvas extends React.Component {
         console.log("5>>>", this.cellAvailableToBombForComputer);
         if (this.gridArrayUser[randomColumn][randomRow] === null) {
           this.gridArrayUser[randomColumn][randomRow] = "miss";
+          this.missileMissSound.play();
           this.isComputerTurn = false;
           this.setState({ ...this.state, isComputerTurn: false });
         } else {
@@ -641,6 +650,7 @@ class BattleGroundCanvas extends React.Component {
             this.state.anyoneWon === null
               ? "bombed"
               : this.gridArrayUser[randomColumn][randomRow];
+          this.missileHitSound.play();
           this.lastBombedCells.push(randomCell);
           console.log(">>>", this.lastBombedCells);
           this.checkAllUserShipsBombed();
@@ -710,6 +720,8 @@ class BattleGroundCanvas extends React.Component {
 
     p.preload = () => {
       loadImages();
+      this.missileMissSound = p.loadSound(MissileMiss);
+      this.missileHitSound = p.loadSound(MissileHit);
     };
 
     p.setup = () => {
@@ -755,6 +767,7 @@ class BattleGroundCanvas extends React.Component {
           }
           if (this.gridArrayComputer[selectedColumn][selectedRow] === null) {
             this.gridArrayComputer[selectedColumn][selectedRow] = "miss";
+            this.missileMissSound.play();
             console.log(">>missed");
             this.isComputerTurn = true;
             this.setState({ ...this.state, isComputerTurn: true });
@@ -776,6 +789,7 @@ class BattleGroundCanvas extends React.Component {
               this.state.anyoneWon === null
                 ? "bombed"
                 : this.gridArrayUser[selectedColumn][selectedRow];
+            this.missileHitSound.play();
             this.checkAllUserShipsBombed();
             if (
               this.computerShipProperties[bombedShip].bomedLocation.length ===
