@@ -3,6 +3,9 @@ import p5 from "p5";
 import { withRouter } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
+import InfoIcon from "@material-ui/icons/Info";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 import { SHIP_PROPERTIES } from "../../constants";
 import arrow from "../../assets/icons/arrow-up.svg";
@@ -66,6 +69,23 @@ const classes = {
     marginLeft: "calc(50% - 12vw)",
     width: "24vw",
   },
+  helpMenu: {
+    display: "flex",
+    padding: "0.75%",
+    fontSize: "2.5vh",
+    marginLeft: "3px",
+    borderRadius: "5px",
+    alignItems: "center",
+    background: "#fbfbfb",
+    justifyContent: "center",
+    boxShadow:
+      "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)",
+  },
+  helpContainer: {
+    display: "flex",
+    marginLeft: "48%",
+    marginTop: "4px",
+  },
 };
 
 class BattleGroundCanvas extends React.Component {
@@ -77,6 +97,7 @@ class BattleGroundCanvas extends React.Component {
       isComputerTurn: false,
       anyoneWon: null,
       isDialogOpen: false,
+      isHelpMenuOpen: false,
     };
   }
 
@@ -1203,6 +1224,14 @@ class BattleGroundCanvas extends React.Component {
     this.setState({ ...this.state, isDialogOpen: false });
   };
 
+  handleMenuOpenClose = () => {
+    console.log("openMenu");
+    this.setState({
+      ...this.state,
+      isHelpMenuOpen: !this.state.isHelpMenuOpen,
+    });
+  };
+
   render() {
     return (
       <>
@@ -1222,49 +1251,70 @@ class BattleGroundCanvas extends React.Component {
                 ) : (
                   <>
                     {this.state.anyoneWon === "user" ? (
-                      <div style={classes.congratsText} onClick={() => {}}>
-                        <div style={classes.dialog}>
-                          <h1 style={classes.h1}>
-                            Congrats {this.props.userName}!🎉 You Won the
-                            Battle. 🤩
-                          </h1>
-                          <Divider />
-                          <Button
-                            style={classes.buttonRoute}
-                            color="primary"
-                            variant="contained"
-                            size="large"
-                            onClick={this.handleRoute}
-                          >
-                            Play Again
-                          </Button>
+                      <>
+                        <h3 style={classes.h3}>User Won</h3>
+                        <div style={classes.congratsText} onClick={() => {}}>
+                          <div style={classes.dialog}>
+                            <h1 style={classes.h1}>
+                              Congrats {this.props.userName}!🎉 You Won the
+                              Battle. 🤩
+                            </h1>
+                            <Divider />
+                            <Button
+                              style={classes.buttonRoute}
+                              color="primary"
+                              variant="contained"
+                              size="large"
+                              onClick={this.handleRoute}
+                            >
+                              Play Again
+                            </Button>
+                          </div>
                         </div>
-                      </div>
+                      </>
                     ) : (
-                      <div style={classes.congratsText} onClick={() => {}}>
-                        <div style={classes.dialog}>
-                          <h1 style={classes.h1}>
-                            Sorry {this.props.userName}🌋, Good Luck next time.
-                            😔
-                          </h1>
-                          <Divider />
-                          <Button
-                            style={classes.buttonRoute}
-                            color="primary"
-                            variant="contained"
-                            size="large"
-                            onClick={this.handleRoute}
-                          >
-                            Play Again
-                          </Button>
+                      <>
+                        <h3 style={classes.h3}>Computer Won</h3>
+                        <div style={classes.congratsText} onClick={() => {}}>
+                          <div style={classes.dialog}>
+                            <h1 style={classes.h1}>
+                              Sorry {this.props.userName}🌋, Good Luck next
+                              time. 😔
+                            </h1>
+                            <Divider />
+                            <Button
+                              style={classes.buttonRoute}
+                              color="primary"
+                              variant="contained"
+                              size="large"
+                              onClick={this.handleRoute}
+                            >
+                              Play Again
+                            </Button>
+                          </div>
                         </div>
-                      </div>
+                      </>
                     )}
                   </>
                 )}
               </>
             ) : (
-              <h5 style={classes.h5}>Select opponent cell to bomb.</h5>
+              <div style={classes.helpContainer}>
+                <Fab
+                  size="small"
+                  color="primary"
+                  onClick={this.handleMenuOpenClose}
+                >
+                  {this.state.isHelpMenuOpen ? <CancelIcon /> : <InfoIcon />}
+                </Fab>
+                {this.state.isHelpMenuOpen ? (
+                  <div style={classes.helpMenu}>
+                    Select the cell to launch the missile.
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
             )}
           </>
         ) : (
