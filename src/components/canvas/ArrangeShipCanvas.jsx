@@ -3,6 +3,9 @@ import p5 from "p5";
 import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
+import Fab from "@material-ui/core/Fab";
+import InfoIcon from "@material-ui/icons/Info";
+import CancelIcon from "@material-ui/icons/Cancel";
 import { SHIP_PROPERTIES } from "../../constants";
 
 import miniDefenderOneSVG from "../../assets/images/mini-defender-1.svg";
@@ -30,10 +33,18 @@ const classes = {
   },
   h4: {
     margin: "0px",
-    fontSize: "3vh",
+    fontSize: "2vh",
   },
-  li: {
-    fontSize: "smaller",
+  menuStyle: {
+    position: "absolute",
+    top: "calc(13% + 42px)",
+    left: "75%",
+    borderRadius: "5px",
+    background: "#fbfbfb",
+    width: "15vw",
+    padding: "0.75%",
+    boxShadow:
+      "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)",
   },
 };
 
@@ -46,6 +57,7 @@ class ArrangeShipCanvas extends React.Component {
       isDragged: false,
       isKeyPressed: false,
       isTouchScrren: this.isTouchScreen(),
+      isHelpMenuOpen: false,
     };
   }
   rowColumn = 10;
@@ -659,6 +671,14 @@ class ArrangeShipCanvas extends React.Component {
     );
   };
 
+  handleMenuOpenClose = () => {
+    console.log("openMenu");
+    this.setState({
+      ...this.state,
+      isHelpMenuOpen: !this.state.isHelpMenuOpen,
+    });
+  };
+
   render() {
     return (
       <>
@@ -678,42 +698,32 @@ class ArrangeShipCanvas extends React.Component {
           <></>
         )}
         <div className="instructionsContainer">
-          <div style={classes.instructions}>
-            {!this.state.isDragged || !this.state.isKeyPressed ? (
-              <h4 style={classes.h4}>Instructions</h4>
+          <Fab size="small" color="primary" onClick={this.handleMenuOpenClose}>
+            {this.state.isHelpMenuOpen ? <CancelIcon /> : <InfoIcon />}
+          </Fab>
+        </div>
+        <div
+          style={{
+            display: this.state.isHelpMenuOpen ? "block" : "none",
+            ...classes.menuStyle,
+          }}
+        >
+          <h4 style={classes.h4}>Instructions</h4>
+          <ul className="arrange-ul">
+            <li className="arrange-li">Drag your ship with mouse.</li>
+            {this.state.isTouchScrren ? (
+              <li className="arrange-li">
+                Use Rotate key at the left bottom corner to align ship
+                vertically or horizontally while Dragging ship.
+              </li>
             ) : (
-              <></>
+              <li className="arrange-li">
+                Use key V or H to align ship vertically or horizontally while
+                Dragging ship.
+              </li>
             )}
-            {!this.state.isDragged || !this.state.isKeyPressed ? (
-              <ul>
-                {!this.state.isDragged ? (
-                  <li style={classes.li}>Drag your ship with mouse.</li>
-                ) : (
-                  <></>
-                )}
-                {!this.state.isKeyPressed ? (
-                  <>
-                    {this.state.isTouchScrren ? (
-                      <li style={classes.li}>
-                        Use Rotate key at the left bottom corner to align ship
-                        vertically or horizontally while Dragging ship.
-                      </li>
-                    ) : (
-                      <li style={classes.li}>
-                        Use key V or H to align ship vertically or horizontally
-                        while Dragging ship.
-                      </li>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-                <li style={classes.li}>Ships can't be overlapped.</li>
-              </ul>
-            ) : (
-              <></>
-            )}
-          </div>
+            <li className="arrange-li">Ships can't be overlapped.</li>
+          </ul>
         </div>
       </>
     );

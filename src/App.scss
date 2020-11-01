@@ -1,6 +1,6 @@
 h1 {
   margin: 0;
-  padding-top: 1vh;
+  padding-top: 2vh;
 }
 
 h3 {
@@ -18,26 +18,15 @@ h6 {
   font-weight: 400;
 }
 
-.canvas-ship, .canvas-battle-ground {
+.canvas-ship,
+.canvas-battle-ground {
   display: flex;
   margin: auto;
 }
 .instructionsContainer {
   position: absolute;
-  top: 7%;
-  left: calc(50% + 123px);
-  width: 36%;
-  background-image: url("./assets/icons/arrow-down.svg");
-  background-repeat: no-repeat;
-  background-size: 178px;
-  @media screen AND (max-width: 1024px) {
-    top: 10%;
-  }
-  @media screen AND (max-width: 800px) {
-    top: 12%;
-    left: calc(50% + 97px);
-    background-size: 102px;
-  }
+  top: 13%;
+  left: 75%;
 }
 
 .fullscreen {
@@ -80,4 +69,60 @@ h6 {
 
 .MuiButton-root {
   text-transform: unset !important;
+}
+
+.transition {
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: inherit;
+}
+.transition:focus {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 300ms, transform 300ms;
+  border: none;
+  outline: none;
+}
+.avatar-transistion {
+  margin-top: -3vh !important;
+  transform: scale(0.6);
+  transition: transform 300ms;
+}
+
+.arrange-ship-img {
+  height: 70vh;
+  @media screen AND (min-width: 1024px) {
+    height: 60vh;
+  }
+  @media screen AND (max-width: 800px) {
+    height: 60vh;
+  }
+  @media screen AND (max-height: 500px) {
+    height: 40vh;
+  }
+}
+
+.arrange-p {
+  @media screen AND (min-width: 1024px) {
+    width: 60%;
+    margin: auto;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+  }
+}
+
+.arrange-ul {
+  padding-left: 1.5vw;
+  @media screen AND (max-width: 1024px) {
+    margin-top: 1vh;
+  }
+}
+
+.arrange-li {
+  font-size: small;
+  @media screen AND (max-width: 1024px) AND (max-height: 450px) {
+    font-size: 8px;
+  }
 }

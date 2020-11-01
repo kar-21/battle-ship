@@ -9,6 +9,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import ShipImage from "./assets/images/ship-image.svg";
 
 import "./App.scss";
 
@@ -52,7 +53,11 @@ const classes = {
   fullscreenText: {
     marginRight: "6%",
     marginLeft: "6%",
+    marginTop: "0.5%",
     fontWeight: "600",
+  },
+  h1: {
+    marginBottom: "1%",
   },
   progress: {
     display: "flex",
@@ -62,6 +67,7 @@ const classes = {
 
 const App = () => {
   const [userName, setUserName] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
   const [gridArray, setGridArray] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -70,6 +76,10 @@ const App = () => {
   const getUserName = (name) => {
     setUserName(name);
   };
+
+  const getAvatar = (avatarIndex) => {
+    setUserAvatar(avatarIndex);
+  }
 
   const getGridArray = (gridArray) => {
     setGridArray(gridArray);
@@ -92,7 +102,7 @@ const App = () => {
           <Route
             exact
             path="/"
-            component={() => <Welcome getUserName={getUserName} />}
+            component={() => <Welcome getUserName={getUserName} getAvatar={getAvatar}/>}
           />
           <Route
             exact
@@ -104,7 +114,9 @@ const App = () => {
           <Route
             exact
             path="/battleGround"
-            component={() => (<BattleGround userName={userName}  gridArray={gridArray} />)}
+            component={() => (
+              <BattleGround userName={userName} gridArray={gridArray} userAvatar={userAvatar}/>
+            )}
           />
           <Route path="/**" component={() => <Error />} />
         </Switch>
@@ -114,6 +126,12 @@ const App = () => {
 
   const EnterFullScreenText = () => (
     <div style={classes.fullscreenDiv}>
+      <h1 style={classes.h1}>Battle Ship</h1>
+      <img src={ShipImage} alt="ship" />
+      <span style={classes.fullscreenText}>
+        A single player game which involves in strategy. Player has to plan the
+        their fleet of ships & win over the computer.
+      </span>
       <span style={classes.fullscreenText}>
         For better experince we want you to use this application in fullscreen
         mode.
