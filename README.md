@@ -2,7 +2,7 @@
 
 ![Netlify](https://img.shields.io/netlify/fd7b8c65-357c-46eb-8196-e40ec73a8131?color=limegreen&style=flat-square) ![yarn](https://img.shields.io/badge/yarn-1.22.4-red?style=flat-square) ![P5.js](https://img.shields.io/badge/p5.js-v1.1.9-yellow?style=flat-square) ![React.js](https://img.shields.io/badge/React-v16.13.1-blue?style=flat-square) ![License](https://img.shields.io/badge/license-MIT-yellowgreen?style=flat-square)
 
-An interactive battle ground designed for the gamers with the help of React.js and P5.js. User forms a navy fleet with help of 7 ships. User ship will encounter a battle with a bot navy fleet.
+An interactive battle ground designed for the gamers with the help of React.js and P5.js. Player forms a navy fleet with help of 7 ships. Player ship will encounter a battle with a bot navy fleet.
 
 Battle Ship's URL is [https://battleship-p5.netlify.app](https://battleship-p5.netlify.app)
 
