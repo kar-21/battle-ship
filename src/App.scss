@@ -131,3 +131,9 @@ h6 {
   height: 30px;
   min-height: 30px;
 }
+.ship-image {
+  height: 60vh;
+  @media screen AND (max-width: 600px) {
+    height: unset;
+  }
+}

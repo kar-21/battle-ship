@@ -97,6 +97,7 @@ class BattleGroundCanvas extends React.Component {
       isComputerTurn: false,
       anyoneWon: null,
       isDialogOpen: false,
+      isTouchScrren: this.isTouchScreen(),
       isHelpMenuOpen: false,
     };
   }
@@ -123,7 +124,7 @@ class BattleGroundCanvas extends React.Component {
   cellAvailableToBombForComputer = [];
   lastBombedCells = [];
   lastMissedCell = null;
-  timeout = 500;
+  timeout = 2000;
   isShipConcentated;
 
   userShipProperties = new SHIP_PROPERTIES();
@@ -340,8 +341,9 @@ class BattleGroundCanvas extends React.Component {
         const grabYRatio = Math.floor(
           this.userShipProperties[ship].cellLocation[0] / this.rowColumn
         );
-        this.userShipProperties[ship].positionX =
-          this.gridSize * grabXRatio + offsetX - 4;
+        this.userShipProperties[ship].positionX = this.state.isTouchScrren
+          ? this.gridSize * grabXRatio + offsetX - 2
+          : this.gridSize * grabXRatio + offsetX - 4;
         this.userShipProperties[ship].positionY =
           this.gridSize * grabYRatio + offsetY;
       } else {
@@ -352,8 +354,9 @@ class BattleGroundCanvas extends React.Component {
         );
         this.userShipProperties[ship].positionX =
           this.gridSize * grabXRatio + offsetX;
-        this.userShipProperties[ship].positionY =
-          this.gridSize * grabYRatio + offsetY + 4;
+        this.userShipProperties[ship].positionY = this.state.isTouchScrren
+          ? this.gridSize * grabYRatio + offsetY + 2
+          : this.gridSize * grabYRatio + offsetY + 4;
       }
     });
   };
@@ -369,8 +372,9 @@ class BattleGroundCanvas extends React.Component {
         const grabYRatio = Math.floor(
           this.computerShipProperties[ship].cellLocation[0] / this.rowColumn
         );
-        this.computerShipProperties[ship].positionX =
-          this.gridSize * grabXRatio + offsetX - 4;
+        this.computerShipProperties[ship].positionX = this.state.isTouchScrren
+          ? this.gridSize * grabXRatio + offsetX - 2
+          : this.gridSize * grabXRatio + offsetX - 4;
         this.computerShipProperties[ship].positionY =
           this.gridSize * grabYRatio + offsetY;
       } else {
@@ -381,8 +385,9 @@ class BattleGroundCanvas extends React.Component {
         );
         this.computerShipProperties[ship].positionX =
           this.gridSize * grabXRatio + offsetX;
-        this.computerShipProperties[ship].positionY =
-          this.gridSize * grabYRatio + offsetY + 4;
+        this.computerShipProperties[ship].positionY = this.state.isTouchScrren
+          ? this.gridSize * grabYRatio + offsetY + 2
+          : this.gridSize * grabYRatio + offsetY + 4;
       }
     });
   };
@@ -1214,6 +1219,22 @@ class BattleGroundCanvas extends React.Component {
     }
     this.setState({ ...this.state, isDialogOpen: true });
   }
+
+  componentWillUnmount() {
+    if (this.props.gridArray.length) {
+      this.canvasRefs = null;
+      this.p5Ref.noCanvas();
+      this.p5Ref.remove();
+    }
+  }
+
+  isTouchScreen = () => {
+    return (
+      "ontouchstart" in window ||
+      navigator.MaxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    );
+  };
 
   handleDialogOpen = () => {
     console.log(">>", this);

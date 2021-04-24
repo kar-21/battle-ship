@@ -41,7 +41,7 @@ const classes = {
   fullscreenDiv: {
     display: "flex",
     height: "100vh",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     textAlign: "center",
     flexDirection: "column",
@@ -63,6 +63,9 @@ const classes = {
     display: "flex",
     justifyContent: "center",
   },
+  rotateScreen: {
+    paddingTop: "48vh",
+  },
 };
 
 const App = () => {
@@ -79,7 +82,7 @@ const App = () => {
 
   const getAvatar = (avatarIndex) => {
     setUserAvatar(avatarIndex);
-  }
+  };
 
   const getGridArray = (gridArray) => {
     setGridArray(gridArray);
@@ -102,7 +105,9 @@ const App = () => {
           <Route
             exact
             path="/"
-            component={() => <Welcome getUserName={getUserName} getAvatar={getAvatar}/>}
+            component={() => (
+              <Welcome getUserName={getUserName} getAvatar={getAvatar} />
+            )}
           />
           <Route
             exact
@@ -115,7 +120,11 @@ const App = () => {
             exact
             path="/battleGround"
             component={() => (
-              <BattleGround userName={userName} gridArray={gridArray} userAvatar={userAvatar}/>
+              <BattleGround
+                userName={userName}
+                gridArray={gridArray}
+                userAvatar={userAvatar}
+              />
             )}
           />
           <Route path="/**" component={() => <Error />} />
@@ -127,7 +136,7 @@ const App = () => {
   const EnterFullScreenText = () => (
     <div style={classes.fullscreenDiv}>
       <h1 style={classes.h1}>Battle Ship</h1>
-      <img src={ShipImage} alt="ship" />
+      <img src={ShipImage} alt="ship" className="ship-image" />
       <span style={classes.fullscreenText}>
         A single player game which involves in strategy. Player has to plan the
         their fleet of ships & win over the computer.
@@ -164,9 +173,14 @@ const App = () => {
               </Orientation>
               <Orientation orientation="portrait" alwaysRender={false}>
                 <div style={classes.fullscreenDiv}>
-                  <span style={classes.fullscreenText}>
+                  <div
+                    style={{
+                      ...classes.fullscreenText,
+                      ...classes.rotateScreen,
+                    }}
+                  >
                     Please rotate your device
-                  </span>
+                  </div>
                 </div>
               </Orientation>
             </DeviceOrientation>
