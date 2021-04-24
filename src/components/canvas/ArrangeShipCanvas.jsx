@@ -1,6 +1,5 @@
 import React from "react";
 import p5 from "p5";
-import 'p5/lib/addons/p5.sound';
 import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
@@ -16,8 +15,6 @@ import defenderTwoSVG from "../../assets/images/defenderTwo.svg";
 import destroyerSVG from "../../assets/images/destroyer.svg";
 import submarineSVG from "../../assets/images/submarine.svg";
 import aircraftCarrierSVG from "../../assets/images/aircraft-carrier.svg";
-import PickSound from "../../assets/sounds/pick.mp3";
-import DropSound from "../../assets/sounds/drop.mp3";
 
 const classes = {
   canvas: {
@@ -146,15 +143,10 @@ class ArrangeShipCanvas extends React.Component {
   Sketch = (p) => {
     let canvas;
     let button;
-    let pickSound;
-    let dropSound;
 
     p.preload = () => {
       this.calculateInitialPositions();
       loadImages();
-      p.soundFormats('mp3');
-      pickSound = p.loadSound(PickSound);
-      dropSound = p.loadSound(DropSound);
     };
 
     p.setup = () => {
@@ -186,7 +178,6 @@ class ArrangeShipCanvas extends React.Component {
     p.mousePressed = () => {
       Object.keys(this.shipProperties).forEach((ship) => {
         if (isInsideShip(this.shipProperties[ship])) {
-          pickSound.play();
           this.shipProperties[ship].selected = true;
           this.currentlySelectedShip = this.shipProperties[ship];
           clearSelected(ship);
@@ -242,7 +233,6 @@ class ArrangeShipCanvas extends React.Component {
             this.resetShipPosition(ship, index);
             this.isArrageShipComplete();
           }
-          dropSound.play();
         }
       });
       this.currentlySelectedShip = null;
@@ -670,6 +660,7 @@ class ArrangeShipCanvas extends React.Component {
     this.canvasRefs = null;
     this.p5Ref.noCanvas();
     this.p5Ref.remove();
+    this.p5Ref.removeElements();
   }
 
   isTouchScreen = () => {

@@ -78,7 +78,7 @@ function BattleGround(props) {
     }, 5000);
 
     return (
-      <button id="transistion" ref={transitionRef} onClick={() =>setHasClickedBattle(true)} className="transition">
+      <button id="transistion" ref={transitionRef} className="transition">
         <div style={classes.iconContainer}>
           <div style={classes.nameImage}>
             <img style={classes.avatar} src={Avatar} alt="computer" />
