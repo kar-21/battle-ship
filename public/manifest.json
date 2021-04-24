@@ -1,6 +1,6 @@
 {
   "short_name": "Battle Ship",
-  "name": "Battle Ship game created with React & P5.js",
+  "name": "Battle Ship. A game created with React & P5.js",
   "icons": [
     {
       "src": "favicon.ico",
